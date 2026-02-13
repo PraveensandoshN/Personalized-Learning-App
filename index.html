@@ -3,111 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Personalized Learning Recommendation Engine</title>
+  <title>Login | Personalized Learning Portal</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <header class="topbar">
-    <h1>Personalized Learning Recommendation Engine</h1>
-    <p>Simple front-end demo for Coursera-style course suggestions</p>
-  </header>
-
-  <main class="container">
-    <section class="card auth-card">
-      <h2>Step 1: Sign Up First</h2>
-      <div class="row">
-        <input id="name" placeholder="Full name" />
-        <input id="email" placeholder="Email" type="email" />
-        <input id="password" placeholder="Password" type="password" />
-        <button id="registerBtn">Sign Up</button>
-        <button id="loginBtn" class="secondary">Login</button>
+<body class="page-bg">
+  <main class="login-shell">
+    <section class="login-card">
+      <div class="brand">
+        <h1>Personalized Learning Portal</h1>
+        <p>Secure access to your recommendation dashboard.</p>
       </div>
-      <p id="authStatus" class="muted">Please sign up to continue.</p>
-    </section>
 
-    <section id="skillsCard" class="card hidden">
-      <h2>Step 2: Tell Us Your Favorite Skills</h2>
-      <p class="muted">Choose skills you enjoy. We will use these to improve recommendations.</p>
+      <form id="loginForm" class="form-grid" novalidate>
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" placeholder="Enter username" autocomplete="username" required />
 
-      <form id="favoriteSkillsForm" class="skills-form">
-        <label><input type="checkbox" name="skill" value="Python" /> Python</label>
-        <label><input type="checkbox" name="skill" value="Data Analysis" /> Data Analysis</label>
-        <label><input type="checkbox" name="skill" value="Machine Learning" /> Machine Learning</label>
-        <label><input type="checkbox" name="skill" value="Web Development" /> Web Development</label>
-        <label><input type="checkbox" name="skill" value="Business" /> Business</label>
-        <label><input type="checkbox" name="skill" value="Communication" /> Communication</label>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="Enter password" autocomplete="current-password" required />
+
+        <button type="submit" class="btn-primary">Login</button>
       </form>
 
-      <div class="row">
-        <input id="customSkill" placeholder="Add another skill (optional)" />
-        <button id="addCustomSkillBtn" type="button">Add Skill</button>
-        <button id="saveSkillsBtn" type="button">Save Favorite Skills</button>
-      </div>
-      <p id="skillsStatus" class="muted">Select at least one skill.</p>
-    </section>
-
-    <section id="appContent" class="disabled-block">
-      <section class="card">
-        <h2>User Profile Management (FR2)</h2>
-        <div class="row">
-          <input id="interests" placeholder="Interests (comma separated e.g. python, data)" />
-          <select id="skillLevel">
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
-          </select>
-          <input id="goal" placeholder="Learning goal (e.g. Data Scientist)" />
-          <button id="saveProfileBtn">Save Profile</button>
-        </div>
-        <p id="profileStatus" class="muted">Profile not saved</p>
-      </section>
-
-      <section class="grid-2">
-        <section class="card">
-          <h2>Search & Filter Courses (FR6)</h2>
-          <div class="row">
-            <input id="search" placeholder="Search by title or category" />
-            <select id="filterLevel">
-              <option value="All">All Levels</option>
-              <option value="Beginner">Beginner</option>
-              <option value="Intermediate">Intermediate</option>
-              <option value="Advanced">Advanced</option>
-            </select>
-            <input id="minRating" type="number" min="0" max="5" step="0.1" value="0" />
-            <button id="applyFilterBtn">Apply</button>
-          </div>
-          <ul id="courseList" class="list"></ul>
-        </section>
-
-        <section class="card">
-          <h2>Recommendation Engine (FR5, FR8, FR9)</h2>
-          <p class="muted">Recommendations are based on your interests, goal, skill level, and feedback.</p>
-          <button id="recommendBtn">Generate Recommendations</button>
-          <ul id="recommendationList" class="list"></ul>
-        </section>
-      </section>
-
-      <section class="card">
-        <h2>Feedback System (FR7)</h2>
-        <p class="muted">Rate recommended courses to improve future suggestions.</p>
-        <ul id="feedbackList" class="list"></ul>
-      </section>
-
-      <section class="card">
-        <h2>Admin Course Management (FR10)</h2>
-        <div class="row">
-          <input id="adminTitle" placeholder="Course title" />
-          <input id="adminCategory" placeholder="Category" />
-          <select id="adminLevel">
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
-          </select>
-          <input id="adminRating" type="number" min="0" max="5" step="0.1" value="4.0" />
-          <button id="addCourseBtn">Add Course</button>
-        </div>
-        <p class="muted">Use delete buttons in the course list to remove courses.</p>
-      </section>
+      <p class="hint">Demo credentials → <strong>user</strong> / <strong>passs</strong></p>
+      <p id="loginStatus" class="status"></p>
     </section>
   </main>
 

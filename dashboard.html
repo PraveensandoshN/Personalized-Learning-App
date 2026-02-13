@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Personalized Learning Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="page-bg">
+  <header class="top-nav">
+    <div>
+      <h1>Recommendation Dashboard</h1>
+      <p>Welcome to your personalized learning space.</p>
+    </div>
+    <button id="logoutBtn" class="btn-secondary">Logout</button>
+  </header>
+
+  <main class="dash-container">
+    <section class="glass-card">
+      <h2>Hello, <span id="currentUser">User</span> 👋</h2>
+      <p>This page is shown only after successful authentication.</p>
+    </section>
+
+    <section class="glass-card">
+      <h3>Suggested Learning Tracks</h3>
+      <ul class="track-list">
+        <li>Data Science Fundamentals</li>
+        <li>Machine Learning Practitioner</li>
+        <li>Business Analytics Essentials</li>
+        <li>Professional Communication for Career Growth</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

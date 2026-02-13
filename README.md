@@ -1,21 +1,18 @@
-# Personalized Learning Recommendation Engine (Front-End)
+# Personalized Learning Portal (Front-End)
 
-A simple front-end prototype built from the provided SRS for a Coursera-style personalized learning recommendation engine.
+A neat, professional, glossy two-page front-end demo.
 
-## Features
-- Sign-up-first flow (student must register first)
-- Favorite skills form shown after sign-up
-- User profile preferences (interests, skill level, goal)
-- Course search and filters
-- Recommendation generation based on profile + feedback
-- Feedback rating loop to improve recommendations
-- Admin add/remove course management
+## Flow
+1. `index.html` is the login page (first screen).
+2. After successful authentication, user is redirected to `dashboard.html`.
+3. If user is not authenticated, direct access to dashboard is blocked and redirected back to login.
+
+## Credentials (as requested)
+- Username: `user`
+- Password: `passs`
 
 ## Run
-Open `index.html` directly in a browser, or run a static server:
-
 ```bash
 python3 -m http.server 8000
 ```
-
-Then visit `http://localhost:8000`.
+Open `http://localhost:8000`.
