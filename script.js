@@ -206,6 +206,12 @@ function attachEvents() {
     const ratingInput = button.parentElement.querySelector('input');
     const rating = Number(ratingInput.value);
 
+  byId('feedbackList').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-fid]');
+    if (!btn) return;
+    const id = Number(btn.dataset.fid);
+    const ratingInput = btn.parentElement.querySelector('input');
+    const rating = Number(ratingInput.value);
     if (rating >= 1 && rating <= 5) {
       state.feedback[id] = rating;
       renderRecommendations();
