@@ -14,12 +14,18 @@ const state = {
     { id: 5, title: 'Deep Learning Specialization', category: 'AI', level: 'Advanced', rating: 4.9 },
     { id: 6, title: 'Personal Productivity', category: 'Personal Development', level: 'Beginner', rating: 4.3 },
   ],
+  favoriteSkills: [],
   viewed: new Set(),
   enrolled: new Set(),
   completed: new Set()
 };
 
 const byId = (id) => document.getElementById(id);
+
+function setAppUnlocked(unlocked) {
+  byId('appContent').classList.toggle('active', unlocked);
+  byId('skillsCard').classList.toggle('hidden', !state.user);
+}
 
 function renderCourses(list = state.courses) {
   const ul = byId('courseList');
@@ -44,13 +50,19 @@ function renderCourses(list = state.courses) {
 }
 
 function courseScore(course) {
-  const terms = new Set([...state.profile.interests.map(v => v.toLowerCase()), state.profile.goal.toLowerCase()]);
+  const terms = new Set([
+    ...state.profile.interests.map((v) => v.toLowerCase()),
+    ...state.favoriteSkills.map((v) => v.toLowerCase()),
+    state.profile.goal.toLowerCase()
+  ]);
   let score = course.rating;
 
   if (terms.size > 0) {
-    for (const t of terms) {
-      if (!t) continue;
-      if (course.title.toLowerCase().includes(t) || course.category.toLowerCase().includes(t)) score += 1.5;
+    for (const term of terms) {
+      if (!term) continue;
+      if (course.title.toLowerCase().includes(term) || course.category.toLowerCase().includes(term)) {
+        score += 1.5;
+      }
     }
   }
 
@@ -87,26 +99,67 @@ function renderRecommendations() {
   });
 }
 
+function collectFavoriteSkills() {
+  const checked = [...document.querySelectorAll('input[name="skill"]:checked')].map((el) => el.value);
+  return [...new Set(checked)];
+}
+
 function attachEvents() {
   byId('registerBtn').addEventListener('click', () => {
     const name = byId('name').value.trim();
     const email = byId('email').value.trim();
-    if (!name || !email) return;
+    const password = byId('password').value.trim();
+
+    if (!name || !email || !password) {
+      byId('authStatus').textContent = 'Please fill name, email, and password to sign up.';
+      return;
+    }
+
     state.user = { name, email };
-    byId('authStatus').textContent = `Registered: ${name} (${email})`;
+    byId('authStatus').textContent = `Signed up successfully: ${name}. Now select favorite skills.`;
+    setAppUnlocked(false);
   });
 
   byId('loginBtn').addEventListener('click', () => {
     if (!state.user) {
-      byId('authStatus').textContent = 'No user found. Please register first.';
+      byId('authStatus').textContent = 'No user found. Please sign up first.';
       return;
     }
     byId('authStatus').textContent = `Logged in as ${state.user.name}`;
   });
 
+  byId('addCustomSkillBtn').addEventListener('click', () => {
+    const custom = byId('customSkill').value.trim();
+    if (!custom) return;
+
+    const wrapper = document.createElement('label');
+    wrapper.innerHTML = `<input type="checkbox" name="skill" value="${custom}" checked /> ${custom}`;
+    byId('favoriteSkillsForm').appendChild(wrapper);
+    byId('customSkill').value = '';
+  });
+
+  byId('saveSkillsBtn').addEventListener('click', () => {
+    if (!state.user) {
+      byId('skillsStatus').textContent = 'Please sign up first.';
+      return;
+    }
+
+    const selected = collectFavoriteSkills();
+    if (selected.length === 0) {
+      byId('skillsStatus').textContent = 'Please select at least one favorite skill.';
+      return;
+    }
+
+    state.favoriteSkills = selected;
+    state.profile.interests = selected;
+    byId('interests').value = selected.join(', ');
+    byId('skillsStatus').textContent = `Saved favorite skills: ${selected.join(', ')}`;
+    setAppUnlocked(true);
+  });
+
   byId('saveProfileBtn').addEventListener('click', () => {
     state.profile = {
-      interests: byId('interests').value.split(',').map(s => s.trim()).filter(Boolean),
+      interests: byId('interests').value.split(',').map((s) => s.trim()).filter(Boolean),
       skillLevel: byId('skillLevel').value,
       goal: byId('goal').value.trim()
     };
@@ -114,15 +167,15 @@ function attachEvents() {
   });
 
   byId('applyFilterBtn').addEventListener('click', () => {
-    const q = byId('search').value.toLowerCase().trim();
+    const query = byId('search').value.toLowerCase().trim();
     const level = byId('filterLevel').value;
     const minRating = Number(byId('minRating').value || 0);
 
-    const filtered = state.courses.filter(c => {
-      const qMatch = !q || c.title.toLowerCase().includes(q) || c.category.toLowerCase().includes(q);
-      const lMatch = level === 'All' || c.level === level;
-      const rMatch = c.rating >= minRating;
-      return qMatch && lMatch && rMatch;
+    const filtered = state.courses.filter((course) => {
+      const queryMatch = !query || course.title.toLowerCase().includes(query) || course.category.toLowerCase().includes(query);
+      const levelMatch = level === 'All' || course.level === level;
+      const ratingMatch = course.rating >= minRating;
+      return queryMatch && levelMatch && ratingMatch;
     });
 
     renderCourses(filtered);
@@ -130,19 +183,28 @@ function attachEvents() {
 
   byId('recommendBtn').addEventListener('click', renderRecommendations);
 
-  byId('courseList').addEventListener('click', (e) => {
-    const btn = e.target.closest('button[data-action]');
-    if (!btn) return;
-    const id = Number(btn.dataset.id);
-    const action = btn.dataset.action;
+  byId('courseList').addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-action]');
+    if (!button) return;
+
+    const id = Number(button.dataset.id);
+    const action = button.dataset.action;
 
     if (action === 'view') state.viewed.add(id);
     if (action === 'enroll') state.enrolled.add(id);
     if (action === 'complete') state.completed.add(id);
-    if (action === 'delete') state.courses = state.courses.filter(c => c.id !== id);
+    if (action === 'delete') state.courses = state.courses.filter((course) => course.id !== id);
 
     renderCourses();
   });
+
+  byId('feedbackList').addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-fid]');
+    if (!button) return;
+
+    const id = Number(button.dataset.fid);
+    const ratingInput = button.parentElement.querySelector('input');
+    const rating = Number(ratingInput.value);
 
   byId('feedbackList').addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-fid]');
@@ -179,4 +241,5 @@ function attachEvents() {
 }
 
 attachEvents();
+setAppUnlocked(false);
 renderCourses();
