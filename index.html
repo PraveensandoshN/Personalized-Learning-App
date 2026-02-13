@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personalized Learning Recommendation Engine</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Personalized Learning Recommendation Engine</h1>
+    <p>Simple front-end demo for Coursera-style course suggestions</p>
+  </header>
+
+  <main class="container">
+    <section class="card auth-card">
+      <h2>User Registration & Login (FR1)</h2>
+      <div class="row">
+        <input id="name" placeholder="Full name" />
+        <input id="email" placeholder="Email" type="email" />
+        <input id="password" placeholder="Password" type="password" />
+        <button id="registerBtn">Register</button>
+        <button id="loginBtn" class="secondary">Login</button>
+      </div>
+      <p id="authStatus" class="muted">No active user</p>
+    </section>
+
+    <section class="card">
+      <h2>User Profile Management (FR2)</h2>
+      <div class="row">
+        <input id="interests" placeholder="Interests (comma separated e.g. python, data)" />
+        <select id="skillLevel">
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+        <input id="goal" placeholder="Learning goal (e.g. Data Scientist)" />
+        <button id="saveProfileBtn">Save Profile</button>
+      </div>
+      <p id="profileStatus" class="muted">Profile not saved</p>
+    </section>
+
+    <section class="grid-2">
+      <section class="card">
+        <h2>Search & Filter Courses (FR6)</h2>
+        <div class="row">
+          <input id="search" placeholder="Search by title or category" />
+          <select id="filterLevel">
+            <option value="All">All Levels</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+          <input id="minRating" type="number" min="0" max="5" step="0.1" value="0" />
+          <button id="applyFilterBtn">Apply</button>
+        </div>
+        <ul id="courseList" class="list"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Recommendation Engine (FR5, FR8, FR9)</h2>
+        <p class="muted">Recommendations are based on your interests, goal, skill level, and feedback.</p>
+        <button id="recommendBtn">Generate Recommendations</button>
+        <ul id="recommendationList" class="list"></ul>
+      </section>
+    </section>
+
+    <section class="card">
+      <h2>Feedback System (FR7)</h2>
+      <p class="muted">Rate recommended courses to improve future suggestions.</p>
+      <ul id="feedbackList" class="list"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Admin Course Management (FR10)</h2>
+      <div class="row">
+        <input id="adminTitle" placeholder="Course title" />
+        <input id="adminCategory" placeholder="Category" />
+        <select id="adminLevel">
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+        <input id="adminRating" type="number" min="0" max="5" step="0.1" value="4.0" />
+        <button id="addCourseBtn">Add Course</button>
+      </div>
+      <p class="muted">Use delete buttons in the course list to remove courses.</p>
+    </section>
+
+    <section class="card">
+      <h2>Functional Requirements Coverage</h2>
+      <table>
+        <thead><tr><th>ID</th><th>Implemented In UI</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>FR1</td><td>Register/Login section</td><td>✅</td></tr>
+          <tr><td>FR2</td><td>Profile form</td><td>✅</td></tr>
+          <tr><td>FR3</td><td>Course data model</td><td>✅</td></tr>
+          <tr><td>FR4</td><td>User activity simulation</td><td>✅</td></tr>
+          <tr><td>FR5</td><td>Recommendation engine button</td><td>✅</td></tr>
+          <tr><td>FR6</td><td>Search & filters</td><td>✅</td></tr>
+          <tr><td>FR7</td><td>Feedback ratings</td><td>✅</td></tr>
+          <tr><td>FR8</td><td>Recommendation update on feedback</td><td>✅</td></tr>
+          <tr><td>FR9</td><td>Recommendations list display</td><td>✅</td></tr>
+          <tr><td>FR10</td><td>Admin add/remove courses</td><td>✅</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
