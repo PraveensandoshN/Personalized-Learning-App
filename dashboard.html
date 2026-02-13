@@ -18,17 +18,19 @@
   <main class="dash-container">
     <section class="glass-card">
       <h2>Hello, <span id="currentUser">User</span> 👋</h2>
-      <p>This page is shown only after successful authentication.</p>
+      <p>Select subjects on the left. Recommendations will update on the right.</p>
     </section>
 
-    <section class="glass-card">
-      <h3>Suggested Learning Tracks</h3>
-      <ul class="track-list">
-        <li>Data Science Fundamentals</li>
-        <li>Machine Learning Practitioner</li>
-        <li>Business Analytics Essentials</li>
-        <li>Professional Communication for Career Growth</li>
-      </ul>
+    <section class="dashboard-grid">
+      <section class="glass-card subject-panel">
+        <h3>Subjects (Choose your interests)</h3>
+        <ul id="subjectsList" class="choice-list"></ul>
+      </section>
+
+      <section class="glass-card recommendations-panel">
+        <h3>Recommended Subjects for You</h3>
+        <ul id="recommendationsList" class="recommend-list"></ul>
+      </section>
     </section>
   </main>
 
